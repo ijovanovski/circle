@@ -3,23 +3,23 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test:
-    working_directory: ~/angular-circleci-surge
+    working_directory: ~/circle-angular
     docker:
       - image: circleci/node:12-browsers
     steps:
       - checkout
       - restore_cache:
-          key: angular-circleci-surge-{{ .Branch }}-{{ checksum "package-lock.json"}}
+          key: circle-angular-{{ .Branch }}-{{ checksum "package-lock.json"}}
       - run: npm install
       - save_cache:
-          key: angular-circleci-surge-{{ .Branch }}-{{ checksum "package-lock.json"}}
+          key: circle-angular-{{ .Branch }}-{{ checksum "package-lock.json"}}
           paths:
             - "nodes_modules"
       - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI  
       - run: npm run build
       - deploy:
           command: |
-            ./node_modules/.bin/surge --project ~/angular-circleci-surge/dist/angular-circleci-surge --domain angular-circleci.surge.sh
+            ./node_modules/.bin/surge --project ~/circle-angular/dist/circle-angular --domain circle-angular.sh
 workflows:
     build-and-test:
       jobs:
