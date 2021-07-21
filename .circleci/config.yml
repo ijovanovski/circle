@@ -1,25 +1,26 @@
 version: 2.1
-# Use a package of configuration called an orb.
 orbs:
   node: circleci/node@1.1.6
-
-jobs:  
+jobs:
   build-and-test:
-    working_directory: ~/angular-circle-surge
+    working_directory: ~/angular-circleci-surge
     docker:
       - image: circleci/node:12-browsers
     steps:
       - checkout
       - restore_cache:
-          key: angular-circle-surge-{{ .Branch }}--{{ checksum "package-lock.json"}}
+          key: angular-circleci-surge-{{ .Branch }}-{{ checksum "package-lock.json"}}
       - run: npm install
       - save_cache:
-          key: angular-circleci-surge- {{ .Branch }}--{{ checksum "package-lock.json"}}
-          paths: 
-           - "node_modules"
-      - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI      
-# Orchestrate or schedule a set of jobs
+          key: angular-circleci-surge-{{ .Branch }}-{{ checksum "package-lock.json"}}
+          paths:
+            - "nodes_modules"
+      - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI  
+      - run: npm run build
+      - deploy:
+          command: |
+            ./node_modules/.bin/surge --project ~/angular-circleci-surge/dist/angular-circleci-surge --domain angular-circleci.surge.sh
 workflows:
-   build-and-test:
-     jobs:
-       - build-and-test
+    build-and-test:
+      jobs:
+        - build-and-test
