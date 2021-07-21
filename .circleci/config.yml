@@ -16,10 +16,7 @@ jobs:
           paths:
             - "nodes_modules"
       - run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI  
-      - run: npm run build
-      - deploy:
-          command: |
-            ./node_modules/.bin/circle-angular --project ~/circle-angular/dist/circle-angular --domain circle-angular.sh
+
 workflows:
     build-and-test:
       jobs:
