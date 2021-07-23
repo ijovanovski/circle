@@ -4,6 +4,8 @@ import {DebugElement } from '@angular/core';
 import {By} from '@angular/platform-browser';
 import { ClickComponent } from './click/click.component';
 import { AuthComponent } from './auth/auth.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { FormsModule } from '@angular/forms';
 
 
 describe('AppComponent', () => {
@@ -13,8 +15,11 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         ClickComponent,
-        AuthComponent
+        AuthComponent,
+        ProductListComponent
+        
       ],
+      imports :[FormsModule]
     }).compileComponents();
   });
 

@@ -1,0 +1,22 @@
+<p>Product List</p>
+
+<p> Type something in the search field to find item</p>
+<input class="form-control" id="myInput" [(ngModel)]="searchText" type="text" placeholder="Search Item"  >
+
+<button (click)="FilterProductList($event)" id="searchButton">  SEARCH </button>
+
+<br/>
+<br/>
+
+<ul > 
+
+<li *ngFor="let product of tempProductList; let i=index" id="{{'product_' + i}}"> 
+    
+    {{product.title}}
+
+
+</li>
+
+
+
+</ul>
